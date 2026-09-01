@@ -73,6 +73,14 @@ void tele_profile_delay(uint8_t d) {
 #define RATE_CV 6
 #define SS_TIMEOUT 90 /* minutes */ * 60 * 100
 
+// the key timer drives both key repeat and the front button long press, so the
+// tick counts below must be rescaled whenever RATE_KEY changes. keeping it
+// equal to the screen refresh period means each repeat lands in its own frame,
+// so held keys scroll evenly rather than dropping a frame periodically
+#define RATE_KEY 63              /* ms, also the key repeat interval */
+#define KEY_REPEAT_DELAY_TICKS 2 /* ~250ms before a held key repeats */
+#define FRONT_HOLD_TICKS 17      /* ~1.1s front button long press */
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // globals (defined in globals.h)
@@ -391,7 +399,7 @@ void handler_Front(int32_t data) {
             set_mode(M_PRESET_R);
         }
         else
-            front_timer = 15;
+            front_timer = FRONT_HOLD_TICKS;
     }
     else {
         if (front_timer) { set_last_mode(); }
@@ -446,7 +454,7 @@ void handler_KeyTimer(int32_t data) {
     // Only process key repeats if we have a valid hold_key
     // and it's not CapsLock (which we're treating as a modifier)
     if (hold_key && hold_key != HID_CAPS_LOCK) {
-        if (hold_key_count > 4)
+        if (hold_key_count > KEY_REPEAT_DELAY_TICKS)
             process_keypress(hold_key, mod_key, true, false);
         else
             hold_key_count++;
@@ -1352,7 +1360,7 @@ void initialize_module(void) {
 
     timer_add(&clockTimer, RATE_CLOCK, &clockTimer_callback, NULL);
     timer_add(&cvTimer, RATE_CV, &cvTimer_callback, NULL);
-    timer_add(&keyTimer, 71, &keyTimer_callback, NULL);
+    timer_add(&keyTimer, RATE_KEY, &keyTimer_callback, NULL);
     timer_add(&adcTimer, 61, &adcTimer_callback, NULL);
     timer_add(&refreshTimer, 63, &refreshTimer_callback, NULL);
     timer_add(&gridFaderTimer, 25, &grid_fader_timer_callback, NULL);
