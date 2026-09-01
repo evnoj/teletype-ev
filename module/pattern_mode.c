@@ -115,10 +115,12 @@ void note_nudge(int8_t semitones) {
 }
 
 void process_pattern_keys(uint8_t k, uint8_t m, bool is_held_key) {
-    // <down>: move down
-    if (match_no_mod(m, k, HID_DOWN)) { pattern_down(); }
-    // alt-<down>: move a page down
-    else if (match_alt(m, k, HID_DOWN)) {
+    // <down> or j: move down
+    if (match_no_mod(m, k, HID_DOWN) || match_no_mod(m, k, HID_J)) {
+        pattern_down();
+    }
+    // alt-<down> or ctrl-j: move a page down
+    else if (match_alt(m, k, HID_DOWN) || match_ctrl(m, k, HID_J)) {
         editing_number = false;
         if (offset < 48)
             offset += 8;
@@ -128,10 +130,12 @@ void process_pattern_keys(uint8_t k, uint8_t m, bool is_held_key) {
         }
         dirty = true;
     }
-    // <up>: move up
-    else if (match_no_mod(m, k, HID_UP)) { pattern_up(); }
-    // alt-<up>: move a page up
-    else if (match_alt(m, k, HID_UP)) {
+    // <up> or k: move up
+    else if (match_no_mod(m, k, HID_UP) || match_no_mod(m, k, HID_K)) {
+        pattern_up();
+    }
+    // alt-<up> or ctrl-k: move a page up
+    else if (match_alt(m, k, HID_UP) || match_ctrl(m, k, HID_K)) {
         editing_number = false;
         if (offset > 8) { offset -= 8; }
         else {
@@ -140,27 +144,27 @@ void process_pattern_keys(uint8_t k, uint8_t m, bool is_held_key) {
         }
         dirty = true;
     }
-    // <left>: move left
-    else if (match_no_mod(m, k, HID_LEFT)) {
+    // <left> or h: move left
+    else if (match_no_mod(m, k, HID_LEFT) || match_no_mod(m, k, HID_H)) {
         editing_number = false;
         if (pattern > 0) pattern--;
         dirty = true;
     }
-    // alt-<left>: move to the very left
-    else if (match_alt(m, k, HID_LEFT)) {
+    // alt-<left> or ctrl-h: move to the very left
+    else if (match_alt(m, k, HID_LEFT) || match_ctrl(m, k, HID_H)) {
         editing_number = false;
         base = 0;
         offset = 0;
         dirty = true;
     }
-    // <right>: move right
-    else if (match_no_mod(m, k, HID_RIGHT)) {
+    // <right> or l: move right
+    else if (match_no_mod(m, k, HID_RIGHT) || match_no_mod(m, k, HID_L)) {
         editing_number = false;
         if (pattern < 3) pattern++;
         dirty = true;
     }
-    // alt-<right>: move to the very right
-    else if (match_alt(m, k, HID_RIGHT)) {
+    // alt-<right> or ctrl-l: move to the very right
+    else if (match_alt(m, k, HID_RIGHT) || match_ctrl(m, k, HID_L)) {
         editing_number = false;
         base = 7;
         offset = 56;

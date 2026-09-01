@@ -1,6 +1,33 @@
 # changes from upstream
 this branch `keyboard-mods` has modifications to the keyboard input handling, to suit my desired ergonomics
 
+## bindings
+### text editing
+- ctrl+h: move cursor left
+- ctrl+l: move cursor right
+- ctrl+b: move left by one word
+- ctrl+w: move right by one word
+- ctrl+backspace: delete from cursor to beginning of word
+
+### edit mode
+- ctrl+/: toggle line comment
+- ctrl+j: line down
+- ctrl+k: line up
+
+### tracker mode
+- h: move left
+- j: move down
+- k: move up
+- l: move right
+- ctrl+h: move to the very left
+- ctrl+j: move a page down 
+- ctrl+k: move a page up
+- ctrl+l: move to the very right
+
+### live mode
+- ctrl+j: history next
+- ctrl+k: history previous
+
 # teletype
 
 monome eurorack module

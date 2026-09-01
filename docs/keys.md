@@ -30,30 +30,30 @@ These bindings work when entering text or code.
 
 In most cases, the clipboard is shared between _live_, _edit_ and the 2 _preset_ modes.
 
-| `Key`                                  | Action                                  |
-|----------------------------------------|-----------------------------------------|
-| **`<left>`** / **`ctrl-b`**            | move cursor left                        |
-| **`<right>`** / **`ctrl-f`**           | move cursor right                       |
-| **`ctrl-<left>`** / **`alt-b`**        | move left by one word                   |
-| **`ctrl-<right>`** / **`alt-f`**       | move right by one word                  |
-| **`<home>`** / **`ctrl-a`**            | move to beginning of line               |
-| **`<end>`** / **`ctrl-e`**             | move to end of line                     |
-| **`<backspace>`** / **`ctrl-h`**       | backwards delete one character          |
-| **`<delete>`** / **`ctrl-d`**          | forwards delete one character           |
-| **`shift-<backspace>`** / **`ctrl-u`** | delete from cursor to beginning         |
-| **`shift-<delete>`** / **`ctrl-k`**    | delete from cursor to end               |
-| **`alt-<backspace>`** / **`ctrl-w`**   | delete from cursor to beginning of word |
-| **`alt-d`**                            | delete from cursor to end of word       |
+| `Key`                                          | Action                                  |
+|------------------------------------------------|-----------------------------------------|
+| **`<left>`** / **`ctrl-h`**                    | move cursor left                        |
+| **`<right>`** / **`ctrl-l`** / **`ctrl-f`**    | move cursor right                       |
+| **`ctrl-<left>`** / **`ctrl-b`** / **`alt-b`** | move left by one word                   |
+| **`ctrl-<right>`** / **`ctrl-w`** / **`alt-f`**| move right by one word                  |
+| **`<home>`** / **`ctrl-a`**                    | move to beginning of line               |
+| **`<end>`** / **`ctrl-e`**                     | move to end of line                     |
+| **`<backspace>`**                              | backwards delete one character          |
+| **`<delete>`** / **`ctrl-d`**                  | forwards delete one character           |
+| **`shift-<backspace>`** / **`ctrl-u`**         | delete from cursor to beginning         |
+| **`shift-<delete>`**                           | delete from cursor to end               |
+| **`alt-<backspace>`** / **`ctrl-<backspace>`** | delete from cursor to beginning of word |
+| **`alt-d`**                                    | delete from cursor to end of word       |
 | **`ctrl-x`** / **`alt-x`**             | cut to clipboard                        |
 | **`ctrl-c`** / **`alt-c`**             | copy to clipboard                       |
 | **`ctrl-v`** / **`alt-v`**             | paste to clipboard                      |
 
 ## Live mode
 
-| `Key`                    | Action                   |
-|--------------------------|--------------------------|
-| **`<down>`** / **`C-n`** | history next             |
-| **`<up>`** / **`C-p`**   | history previous         |
+| `Key`                                | Action               |
+|--------------------------------------|----------------------|
+| **`<down>`** / **`C-n`** / **`C-j`** | history next         |
+| **`<up>`** / **`C-p`** / **`C-k`**   | history previous     |
 | **`<enter>`**            | execute command          |
 | **`~`**                  | toggle variables         |
 | **`[`** / **`]`**        | switch to edit mode      |
@@ -72,15 +72,15 @@ In full grid visualizer mode pressing `alt` is not required.
 
 In _edit_ mode multiple lines can be selected and used with the clipboard.
 
-| `Key`                   | Action                    |
-|-------------------------|---------------------------|
-| **`<down>`** / **`C-n`**| line down                 |
-| **`<up>`** / **`C-p`**  | line up                   |
+| `Key`                             | Action              |
+|-----------------------------------|---------------------|
+| **`<down>`** / **`C-n`** / **`C-j`** | line down        |
+| **`<up>`** / **`C-p`** / **`C-k`**   | line up          |
 | **`[`**                 | previous script           |
 | **`]`**                 | next script               |
 | **`<enter>`**           | enter command             |
 | **`shift-<enter>`**     | insert command            |
-| **`alt-/`**             | toggle line comment       |
+| **`alt-/`** / **`ctrl-/`** | toggle line comment    |
 | **`shift-<up>`**        | expand selection up       |
 | **`shift-<down>`**      | expand selection down     |
 | **`alt-<delete>`**      | delete selection          |
@@ -94,14 +94,14 @@ The tracker mode clipboard is independent of text and code clipboard.
 
 | `Key`                   | Action                                                                                |
 |-------------------------|---------------------------------------------------------------------------------------|
-| **`<down>`**            | move down                                                                             |
-| **`alt-<down>`**        | move a page down                                                                      |
-| **`<up>`**              | move up                                                                               |
-| **`alt-<up>`**          | move a page up                                                                        |
-| **`<left>`**            | move left                                                                             |
-| **`alt-<left>`**        | move to the very left                                                                 |
-| **`<right>`**           | move right                                                                            |
-| **`alt-<right>`**       | move to the very right                                                                |
+| **`<down>`** / **`j`**            | move down                                                                   |
+| **`alt-<down>`** / **`ctrl-j`**   | move a page down                                                            |
+| **`<up>`** / **`k`**              | move up                                                                     |
+| **`alt-<up>`** / **`ctrl-k`**     | move a page up                                                              |
+| **`<left>`** / **`h`**            | move left                                                                   |
+| **`alt-<left>`** / **`ctrl-h`**   | move to the very left                                                       |
+| **`<right>`** / **`l`**           | move right                                                                  |
+| **`alt-<right>`** / **`ctrl-l`**  | move to the very right                                                      |
 | **`[`**                 | decrement by 1                                                                        |
 | **`]`**                 | increment by 1                                                                        |
 | **`alt-[`**             | decrement by 1 semitone                                                               |

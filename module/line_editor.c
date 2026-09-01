@@ -44,13 +44,14 @@ char *line_editor_get(line_editor_t *le) {
 
 bool line_editor_process_keys(line_editor_t *le, uint8_t k, uint8_t m,
                               bool is_key_held) {
-    // <left> or ctrl-b: move cursor left
-    if (match_no_mod(m, k, HID_LEFT) || match_ctrl(m, k, HID_B)) {
+    // <left> or ctrl-h: move cursor left
+    if (match_no_mod(m, k, HID_LEFT) || match_ctrl(m, k, HID_H)) {
         if (le->cursor) { le->cursor--; }
         return true;
     }
-    // <right> or ctrl-f: move cursor right
-    else if (match_no_mod(m, k, HID_RIGHT) || match_ctrl(m, k, HID_F)) {
+    // <right>, ctrl-f or ctrl-l: move cursor right
+    else if (match_no_mod(m, k, HID_RIGHT) || match_ctrl(m, k, HID_F) ||
+             match_ctrl(m, k, HID_L)) {
         if (le->cursor < le->length) { le->cursor++; }
         return true;
     }
@@ -64,8 +65,9 @@ bool line_editor_process_keys(line_editor_t *le, uint8_t k, uint8_t m,
         le->cursor = le->length;
         return true;
     }
-    // ctrl-<left> or alt-b: move cursor to previous word
-    else if (match_ctrl(m, k, HID_LEFT) || match_alt(m, k, HID_B)) {
+    // ctrl-<left>, alt-b or ctrl-b: move cursor to previous word
+    else if (match_ctrl(m, k, HID_LEFT) || match_alt(m, k, HID_B) ||
+             match_ctrl(m, k, HID_B)) {
         bool encountered_word = false;
         while (le->cursor) {
             if (le->buffer[le->cursor - 1] == ' ') {
@@ -76,8 +78,9 @@ bool line_editor_process_keys(line_editor_t *le, uint8_t k, uint8_t m,
         }
         return true;
     }
-    // ctrl-<right> or alt-f: move cursor to next word
-    else if (match_ctrl(m, k, HID_RIGHT) || match_alt(m, k, HID_F)) {
+    // ctrl-<right>, alt-f or ctrl-w: move cursor to next word
+    else if (match_ctrl(m, k, HID_RIGHT) || match_alt(m, k, HID_F) ||
+             match_ctrl(m, k, HID_W)) {
         bool encountered_word = false;
         while (le->cursor < le->length) {
             if (le->buffer[le->cursor] == ' ') {
@@ -88,8 +91,8 @@ bool line_editor_process_keys(line_editor_t *le, uint8_t k, uint8_t m,
         }
         return true;
     }
-    // <backspace> or ctrl-h: backwards delete one character
-    else if (match_no_mod(m, k, HID_BACKSPACE) || match_ctrl(m, k, HID_H)) {
+    // <backspace>: backwards delete one character
+    else if (match_no_mod(m, k, HID_BACKSPACE)) {
         if (le->cursor) {
             le->cursor--;
             for (size_t x = le->cursor; x < LINE_EDITOR_SIZE - 1; x++) {
@@ -118,14 +121,16 @@ bool line_editor_process_keys(line_editor_t *le, uint8_t k, uint8_t m,
         le->cursor = 0;
         return true;
     }
-    // shift-<delete> or ctrl-k: delete from cursor to end
-    else if (match_shift(m, k, HID_DELETE) || match_ctrl(m, k, HID_K)) {
+    // shift-<delete>: delete from cursor to end
+    else if (match_shift(m, k, HID_DELETE)) {
         le->buffer[le->cursor] = 0;
         le->length = le->cursor;
         return true;
     }
-    // alt-<backspace> or ctrl-w: delete from cursor to beginning of word
-    else if (match_alt(m, k, HID_BACKSPACE) || match_ctrl(m, k, HID_W)) {
+    // alt-<backspace> or ctrl-<backspace>: delete from cursor to beginning of
+    // word
+    else if (match_alt(m, k, HID_BACKSPACE) ||
+             match_ctrl(m, k, HID_BACKSPACE)) {
         bool encountered_word = false;
         while (le->cursor) {
             // Stop after reaching space on the other side of the word.

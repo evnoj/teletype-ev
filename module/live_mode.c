@@ -384,13 +384,15 @@ void process_live_keys(uint8_t k, uint8_t m, bool is_held_key, bool is_release,
         return;
     }
 
-    // <down> or C-n: history next
-    if ((match_no_mod(m, k, HID_DOWN) || match_ctrl(m, k, HID_N)) &&
+    // <down>, C-n or C-j: history next
+    if ((match_no_mod(m, k, HID_DOWN) || match_ctrl(m, k, HID_N) ||
+         match_ctrl(m, k, HID_J)) &&
         sub_mode != SUB_MODE_FULLGRID) {
         history_next();
     }
-    // <up> or C-p: history previous
-    else if ((match_no_mod(m, k, HID_UP) || match_ctrl(m, k, HID_P)) &&
+    // <up>, C-p or C-k: history previous
+    else if ((match_no_mod(m, k, HID_UP) || match_ctrl(m, k, HID_P) ||
+              match_ctrl(m, k, HID_K)) &&
              sub_mode != SUB_MODE_FULLGRID) {
         history_prev();
     }
