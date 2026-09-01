@@ -101,8 +101,9 @@ void edit_mode_refresh() {
 void process_edit_keys(uint8_t k, uint8_t m, bool is_held_key) {
     // C-z: undo
     if (match_ctrl(m, k, HID_Z)) { undo(); }
-    // <down> or C-n: line down
-    else if (match_no_mod(m, k, HID_DOWN) || match_ctrl(m, k, HID_N)) {
+    // <down>, C-n or C-j: line down
+    else if (match_no_mod(m, k, HID_DOWN) || match_ctrl(m, k, HID_N) ||
+             match_ctrl(m, k, HID_J)) {
         if (line_no1 < (SCRIPT_MAX_COMMANDS - 1) &&
             line_no1 < ss_get_script_len(&scene_state, script)) {
             line_no1++;
@@ -116,8 +117,9 @@ void process_edit_keys(uint8_t k, uint8_t m, bool is_held_key) {
             dirty |= D_LIST | D_INPUT;
         }
     }
-    // <up> or C-p: line up
-    else if (match_no_mod(m, k, HID_UP) || match_ctrl(m, k, HID_P)) {
+    // <up>, C-p or C-k: line up
+    else if (match_no_mod(m, k, HID_UP) || match_ctrl(m, k, HID_P) ||
+             match_ctrl(m, k, HID_K)) {
         if (line_no1) {
             line_no1--;
             line_editor_set_command(
@@ -369,8 +371,8 @@ void process_edit_keys(uint8_t k, uint8_t m, bool is_held_key) {
         line_no2 = line_no1;
         dirty |= D_LIST | D_INPUT;
     }
-    // alt-slash comment toggle selected lines
-    else if (match_alt(m, k, HID_SLASH)) {
+    // alt-slash or ctrl-slash: comment toggle selected lines
+    else if (match_alt(m, k, HID_SLASH) || match_ctrl(m, k, HID_SLASH)) {
         if (line_no1 >= ss_get_script_len(&scene_state, script)) return;
         save_undo();
         for (u8 l = min(line_no1, line_no2); l <= max(line_no1, line_no2); l++)
